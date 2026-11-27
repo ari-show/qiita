@@ -1,0 +1,30 @@
+<mxfile host="drawio">
+<diagram id="uv-path" name="uvのインストール先変更">
+<mxGraphModel grid="0" page="0" background="#FFFFFF">
+<root>
+<mxCell id="0"/>
+<mxCell id="1" parent="0"/>
+<mxCell id="L" value="以前（Cargo 由来）" style="swimlane;startSize=40;rounded=1;arcSize=4;html=1;fontSize=15;fontStyle=1;fontColor=#374151;fillColor=#F3F4F6;swimlaneFillColor=#FAFAFA;strokeColor=#D1D5DB;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="360" height="490" as="geometry"/></mxCell>
+<mxCell id="R" value="PR #8420 以降（XDG 準拠）" style="swimlane;startSize=40;rounded=1;arcSize=4;html=1;fontSize=15;fontStyle=1;fontColor=#1E3A8A;fillColor=#DBEAFE;swimlaneFillColor=#F8FAFF;strokeColor=#93C5FD;" vertex="1" parent="1"><mxGeometry x="560" y="40" width="360" height="490" as="geometry"/></mxCell>
+<mxCell id="l0" value="インストーラ実行&lt;br&gt;&lt;font face=&quot;Menlo&quot; style=&quot;font-size:12px&quot; color=&quot;#6B7280&quot;&gt;sh uv-installer.sh&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fontSize=14;fillColor=#FFFFFF;strokeColor=#9CA3AF;fontColor=#1F2937;" vertex="1" parent="L"><mxGeometry x="40" y="60" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="l1" value="配置先&lt;br&gt;&lt;font face=&quot;Menlo&quot;&gt;~/.cargo/bin/uv&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fontSize=14;fillColor=#FFFFFF;strokeColor=#9CA3AF;fontColor=#1F2937;" vertex="1" parent="L"><mxGeometry x="40" y="150" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="l2" value="&lt;font face=&quot;Menlo&quot;&gt;. $HOME/.cargo/env&lt;/font&gt;&lt;br&gt;で PATH が通る" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fontSize=14;fillColor=#FFFFFF;strokeColor=#9CA3AF;fontColor=#1F2937;" vertex="1" parent="L"><mxGeometry x="40" y="240" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="l4" value="uv sync 成功" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#059669;strokeColor=none;fontColor=#FFFFFF;" vertex="1" parent="L"><mxGeometry x="80" y="420" width="200" height="44" as="geometry"/></mxCell>
+<mxCell id="r0" value="インストーラ実行&lt;br&gt;&lt;font face=&quot;Menlo&quot; style=&quot;font-size:12px&quot; color=&quot;#6B7280&quot;&gt;sh uv-installer.sh&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fontSize=14;fillColor=#FFFFFF;strokeColor=#9CA3AF;fontColor=#1F2937;" vertex="1" parent="R"><mxGeometry x="40" y="60" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="r1" value="配置先&lt;br&gt;&lt;font face=&quot;Menlo&quot;&gt;&lt;b&gt;~/.local/bin/uv&lt;/b&gt;&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fontSize=14;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=2;fontColor=#1E3A8A;" vertex="1" parent="R"><mxGeometry x="40" y="150" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="r2" value="&lt;font face=&quot;Menlo&quot;&gt;. $HOME/.cargo/env&lt;/font&gt;&lt;br&gt;&lt;b&gt;No such file → ビルド失敗&lt;/b&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fontSize=14;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;fontColor=#991B1B;" vertex="1" parent="R"><mxGeometry x="40" y="240" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="r3" value="Dockerfile に追加&lt;br&gt;&lt;font face=&quot;Menlo&quot; style=&quot;font-size:12px&quot;&gt;ENV PATH=&quot;/root/.local/bin:$PATH&quot;&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fontSize=14;fillColor=#ECFDF5;strokeColor=#059669;strokeWidth=2;dashed=1;fontColor=#065F46;" vertex="1" parent="R"><mxGeometry x="40" y="330" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="r4" value="uv sync 成功" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#059669;strokeColor=none;fontColor=#FFFFFF;" vertex="1" parent="R"><mxGeometry x="80" y="420" width="200" height="44" as="geometry"/></mxCell>
+<mxCell id="el1" style="html=1;endArrow=block;endSize=6;strokeColor=#9CA3AF;strokeWidth=1.5;" edge="1" source="l0" target="l1" parent="L"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="el2" style="html=1;endArrow=block;endSize=6;strokeColor=#9CA3AF;strokeWidth=1.5;" edge="1" source="l1" target="l2" parent="L"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="el3" style="html=1;endArrow=block;endSize=6;strokeColor=#9CA3AF;strokeWidth=1.5;" edge="1" source="l2" target="l4" parent="L"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="er1" style="html=1;endArrow=block;endSize=6;strokeColor=#9CA3AF;strokeWidth=1.5;" edge="1" source="r0" target="r1" parent="R"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="er2" style="html=1;endArrow=block;endSize=6;strokeColor=#9CA3AF;strokeWidth=1.5;" edge="1" source="r1" target="r2" parent="R"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="er3" style="html=1;endArrow=block;endSize=6;strokeColor=#059669;strokeWidth=1.5;" edge="1" source="r2" target="r3" parent="R"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="er4" style="html=1;endArrow=block;endSize=6;strokeColor=#059669;strokeWidth=1.5;" edge="1" source="r3" target="r4" parent="R"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="chg" value="PR #8420 で変更" style="html=1;endArrow=block;endSize=6;dashed=1;strokeColor=#3B82F6;strokeWidth=1.5;fontSize=13;fontColor=#1D4ED8;labelBackgroundColor=#FFFFFF;" edge="1" source="l1" target="r1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="same" value="同じコマンドでも&lt;br&gt;結果が変わる" style="html=1;endArrow=none;dashed=1;dashPattern=2 3;strokeColor=#DC2626;fontSize=12;fontColor=#991B1B;labelBackgroundColor=#FFFFFF;" edge="1" source="l2" target="r2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+</root>
+</mxGraphModel>
+</diagram>
+</mxfile>
