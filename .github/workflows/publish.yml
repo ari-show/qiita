@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -72,7 +72,7 @@ jobs:
       # Qiitaへ公開する処理（PRがマージされた後に行われる）
       - name: Publish article to Qiita
         if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-        uses: increments/qiita-cli/actions/publish@v1
+        uses: increments/qiita-cli/actions/publish@0e8bb5e2e16b11940761db77e52a9b9f041f5976 # v1.13.0
         with:
           qiita-token: ${{ secrets.QIITA_TOKEN }}
           root: "."
