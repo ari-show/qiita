@@ -1,6 +1,10 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 """layer_stack() のお手本：Dockerfile で uv を使うときに「uv が見つからない」となる層。
 
-    python3 tools/drawio/examples/layer_stack.py   # リポジトリのルートで実行
+    uv run tools/drawio/examples/layer_stack.py   # リポジトリのルートで実行
 
 層（帯）を上から並べ、下から上への「通り道」が途切れる境目に ✕ と原因・確認コマンドを置く。
 右側の近道は、層を飛ばして直接届く方法を示す。

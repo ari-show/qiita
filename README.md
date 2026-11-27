@@ -8,6 +8,19 @@ This repository is to manege my Qiita article
 - ユーザー設定ファイル（qiita.config.json）
   - 「ユーザー設定ファイルについて」の項目を参照
 
+## よく使うコマンド（Makefile）
+
+```console
+make                       # コマンドの一覧
+make install               # 依存パッケージを入れる
+make new name=my-article   # 記事を作る（public/my-article.md）
+make preview               # ブラウザでプレビュー
+make pull                  # Qiita 側の記事を取り込む
+make check-names           # 記事のファイル名が規則どおりか調べる
+```
+
+記事のファイル名は英小文字・数字をハイフンでつなぐ（kebab-case。例: `uv-xdg-compliant.md`）。
+
 ## Qiita Preview の起動（プレビュー画面の表示）
 
 本文の執筆は、ブラウザでプレビューしながら確認できます。ブラウザでプレビューするためには以下のコマンドを実行します。
