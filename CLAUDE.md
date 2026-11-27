@@ -6,6 +6,7 @@ Qiita CLI で記事を管理するリポジトリ。
 
 - `public/*.md` — 記事本体（Qiita CLI 管理。front matter の `id` / `updated_at` は手で書き換えない）
   - ファイル名は英小文字・数字をハイフンでつなぐ（kebab-case。例: `uv-xdg-compliant.md`）。Qiita CLI は記事を `id` で探すので、名前を変えても Qiita 側には影響しない
+  - Qiita のエディタで書いた記事は、`qiita pull` で `<id>.md`（20桁の英数字）の名前で入ってくる。手元に同じ `id` のファイルが無いときだけそうなる。規則どおりの名前に変えてからマージする（一度変えれば、次の pull でも名前は保たれる）。`make check-names` で見つけられる
 - `pic/` — 記事用の画像の元データ。Qiita へのアップロードは手動
 - `pic/draw.io/<記事>/` — draw.io の図。記事ごとにフォルダを分ける（下記）
 - `tools/drawio/` — 図を Python で組み立てるキット `drawio_kit.py` と、そのお手本 `examples/`
