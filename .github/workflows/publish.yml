@@ -1,11 +1,13 @@
 # Please set 'QIITA_TOKEN' secret to your repository
 name: Publish articles
 
+# 一時停止中: main への push では自動実行しない（手動実行のみ）。
+# 再開するときは下の push トリガーのコメントを外す。
 on:
-  push:
-    branches:
-      - main
-      - master
+  # push:
+  #   branches:
+  #     - main
+  #     - master
   workflow_dispatch:
 
 permissions:
