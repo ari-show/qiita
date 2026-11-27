@@ -6,3 +6,10 @@ memo.txt
 .DS_Store
 
 *.bkp
+
+# 下書き置き場（CLAUDE.md の決まり）
+tmp/
+
+# トークンなどの秘密情報
+.env
+.env.*
