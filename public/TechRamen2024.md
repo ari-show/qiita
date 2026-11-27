@@ -12,6 +12,11 @@ organization_url_name: null
 slide: false
 ignorePublish: false
 ---
+:::note info
+この記事ははてなブログに移しました。最新の内容はこちらをご覧ください。
+https://arishow.hatenablog.com/entry/2026/11/28/TechRamen2024
+:::
+
 # 1. はじめに
 今回、Tech Ramen 2024という旭川で開催されたカンファレンスに参加してきました。
 ## Tech Ramen 2024とは
