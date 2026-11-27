@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 """draw.io の図を Python で組み立てて書き出すための小さなキット。
 
 CLAUDE.md の「図の清書」の方針（配色・角丸・等幅フォント・アイコン）を部品にしたもの。
@@ -15,8 +19,8 @@ XML を手で書くとエスケープや base64 化で壊れやすいので、�
     export_png("pic/draw.io/<記事>/<図名>.drawio")
 
 コマンドライン:
-    python3 tools/drawio/drawio_kit.py export <file.drawio> [...]   # PNG を書き出す
-    python3 tools/drawio/drawio_kit.py icons                        # 使えるアイコン一覧
+    uv run tools/drawio/drawio_kit.py export <file.drawio> [...]   # PNG を書き出す
+    uv run tools/drawio/drawio_kit.py icons                        # 使えるアイコン一覧
 """
 
 from __future__ import annotations

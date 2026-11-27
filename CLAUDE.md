@@ -5,16 +5,30 @@ Qiita CLI で記事を管理するリポジトリ。
 ## 構成
 
 - `public/*.md` — 記事本体（Qiita CLI 管理。front matter の `id` / `updated_at` は手で書き換えない）
+  - ファイル名は英小文字・数字をハイフンでつなぐ（kebab-case。例: `uv-xdg-compliant.md`）。Qiita CLI は記事を `id` で探すので、名前を変えても Qiita 側には影響しない
 - `pic/` — 記事用の画像の元データ。Qiita へのアップロードは手動
 - `pic/draw.io/<記事>/` — draw.io の図。記事ごとにフォルダを分ける（下記）
 - `tools/drawio/` — 図を Python で組み立てるキット `drawio_kit.py` と、そのお手本 `examples/`
 - `tmp/` — 下書き置き場。コミットしない
+- `Makefile` — よく使う操作。`make` で一覧を表示する
+
+### よく使うコマンド
+
+```bash
+make new name=my-article   # 記事を作る（ファイル名の規則を検査してから qiita new）
+make preview               # ブラウザでプレビュー（http://localhost:8888）
+make pull                  # Qiita 側の記事を取り込む
+make check-names           # public/ のファイル名が規則どおりか調べる
+```
+
+- Python のスクリプトは `uv run` で実行する（スクリプト先頭の PEP 723 のメタデータで Python の版を決めている。外部パッケージは使っていない）
+- 記事の公開（`qiita publish`）は取り消しにくいので Makefile には入れていない。ユーザーに確認してから実行する
 
 ### 図の置き場所
 
 ```
 pic/draw.io/
-  <記事>/                     記事ファイル名から .md と先頭の # を除いた名前（例: uv-XDG-compliant）
+  <記事>/                     記事ファイル名から .md を除いた名前（例: uv-xdg-compliant）
     <図名>.drawio             編集用（正本）
     <図名>.drawio.png         記事に貼る PNG（XML 埋め込み。draw.io で開き直せる）
     <図名>.py                 スクリプトで生成した図はその生成元も置く
@@ -60,7 +74,7 @@ Mermaid は内容の下書き（何をつなぐか）として使い、配置と
    - `.drawio` 単体で表示できるよう、`shape=image;image=data:image/svg+xml,<base64>;aspect=fixed;` で埋め込む
 
 お手本：
-- 比較（XML を手書き）：`pic/draw.io/uv-XDG-compliant/uvのインストール先変更.drawio`
+- 比較（XML を手書き）：`pic/draw.io/uv-xdg-compliant/uvのインストール先変更.drawio`
 - 層構造＋アイコン（キットで生成）：`tools/drawio/examples/layer_stack.py`
 
 ### draw.io CLI
@@ -76,12 +90,13 @@ Mermaid は内容の下書き（何をつなぐか）として使い、配置と
 1. 上の方針に沿って `pic/draw.io/<記事>/<図名>.drawio` を作る。
    - 要素が多い図やアイコンを入れる図は、XML を手で書かず `tools/drawio/drawio_kit.py` を使ったスクリプト（`<図名>.py`）で生成する。配色は方針どおりの `kind`（`neutral` / `focus` / `error` / `fix` / `success`）で指定でき、エスケープ・アイコンの base64 化・XML の検証も任せられる
    - 層構造の図は `layer_stack()` を使う（`tools/drawio/examples/layer_stack.py` を参照）
-   - 使えるアイコンは `python3 tools/drawio/drawio_kit.py icons`。足りなければ `ICONS` に版を固定した URL を追加する
+   - 使えるアイコンは `make icons`（`uv run tools/drawio/drawio_kit.py icons`）。足りなければ `ICONS` に版を固定した URL を追加する
    - XML の書き方は https://raw.githubusercontent.com/jgraph/drawio-mcp/main/shared/xml-essentials.md に従う
    - 座標を自分で決めにくい図（ネットワーク図など）は `--layout verticalFlow` などで自動配置してよい
 2. XML を埋め込んだ PNG を書き出す（`-e` を付けると、PNG を draw.io で開いて再編集できる）。
    ```bash
-   python3 tools/drawio/drawio_kit.py export "pic/draw.io/<記事>/<図名>.drawio"
+   make diagram f="pic/draw.io/<記事>/<図名>.drawio"
+   # = uv run tools/drawio/drawio_kit.py export "pic/draw.io/<記事>/<図名>.drawio"
    # 中身は: drawio -x -f png -e -b 16 -s 2 -o "<図名>.drawio.png" "<図名>.drawio"
    ```
 3. 書き出した PNG を必ず目で確認する（文字のはみ出し、線とラベルの重なり、余白の偏り）。崩れていれば XML を直して手順 2 からやり直す。
