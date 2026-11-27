@@ -8,6 +8,8 @@ id: f5b8ac211665a3a60294
 organization_url_name: null
 slide: false
 ignorePublish: false
+posting_campaign_uuid: null
+agreed_posting_campaign_term: false
 ---
 
 # 技育祭2024春

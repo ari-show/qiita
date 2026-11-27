@@ -9,6 +9,8 @@ id: b4fc3c31b8db7db6b0f9
 organization_url_name: null
 slide: false
 ignorePublish: false
+posting_campaign_uuid: null
+agreed_posting_campaign_term: false
 ---
 # 1. はじめに
 今回7/13(土)に吉祥寺にある武蔵野公会堂で[「大吉祥寺.pm」](https://fortee.jp/dai-kichijojipm-2024)に参加してきました。
