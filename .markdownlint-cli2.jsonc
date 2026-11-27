@@ -1,0 +1,22 @@
+// markdownlint の設定（Qiita の記事向け）
+// 見た目の好みに近い規則と、Qiita の書き方と合わない規則は切る。
+// 空行などの整形は `make lint-fix` で自動修正できる。
+{
+  "config": {
+    "default": true,
+
+    // Qiita の書き方と合わないもの
+    "MD013": false, // 行の長さ：日本語の文章では意味がない
+    "MD025": false, // 見出し1は1つだけ：記事では # を章見出しに使っている
+    "MD033": false, // HTML：Qiita は <img width> や <details> を使う
+    "MD034": false, // 裸の URL：Qiita は行に URL だけ書くとリンクカードになる
+    "MD041": false, // 先頭行は見出し：front matter や :::note で始まる記事がある
+
+    // 好みの問題で、直しても表示が変わらないもの
+    "MD007": false, // リストの字下げ幅：記事ごとに 2 と 4 が混ざっている
+    "MD014": false, // コマンドの $：出力の無いコマンドにも $ を付けて書いている
+    "MD036": false, // 強調を見出し代わりに使う
+    "MD060": false, // 表の列のそろえ方
+    "MD024": { "siblings_only": true } // 同じ見出し：別の章の下なら同じ名前でよい
+  }
+}

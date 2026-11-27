@@ -10,6 +10,7 @@ Qiita CLI で記事を管理するリポジトリ。
 - `pic/` — 記事用の画像の元データ。Qiita へのアップロードは手動
 - `pic/draw.io/<記事>/` — draw.io の図。記事ごとにフォルダを分ける（下記）
 - `tools/drawio/` — 図を Python で組み立てるキット `drawio_kit.py` と、そのお手本 `examples/`
+- `tools/check_articles.py` — 記事と画像の検査（Qiita とこのリポジトリ固有の決まり）。CI の `Lint articles` でも動く
 - `tmp/` — 下書き置き場。コミットしない
 - `Makefile` — よく使う操作。`make` で一覧を表示する
 
@@ -20,7 +21,15 @@ make new name=my-article   # 記事を作る（ファイル名の規則を検査
 make preview               # ブラウザでプレビュー（http://localhost:8888）
 make pull                  # Qiita 側の記事を取り込む
 make check-names           # public/ のファイル名が規則どおりか調べる
+make lint                  # 記事を検査する（CI と同じ）
+make lint-fix f=public/my-article.md   # 空行などを自動で直す
 ```
+
+### 記事の検査（CI：`.github/workflows/lint.yml`）
+
+- `check-articles`（全記事）：ファイル名、front matter（title・タグ 1〜5 個・`id` の重複）、画像の URL が `https://` か、`<!-- 図の元: パス -->` のファイルがあるか、`pic/draw.io/<フォルダ>` と同じ名前の記事があるか、写真に位置情報（EXIF の GPS）が残っていないか
+- `markdownlint`（PR で変えた記事だけ）：設定は `.markdownlint-cli2.jsonc`。Qiita の書き方と合わない規則（裸の URL、HTML、見出し1の数など）は切ってある
+  - 既存の記事には空行などの違反が多く残っている。まとめて直すと Qiita 側とずれるので、記事を触ったときに `make lint-fix` で直し、`qiita publish` まで済ませる
 
 - Python のスクリプトは `uv run` で実行する（スクリプト先頭の PEP 723 のメタデータで Python の版を決めている。外部パッケージは使っていない）
 - 記事の公開（`qiita publish`）は取り消しにくいので Makefile には入れていない。ユーザーに確認してから実行する

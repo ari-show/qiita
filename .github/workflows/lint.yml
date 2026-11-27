@@ -1,0 +1,62 @@
+# 記事の検査。ルールセット protect_main の必須チェックに登録する。
+name: Lint articles
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+# 読むだけ。リポジトリへの書き込みやトークンの権限は要らない
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Qiita とこのリポジトリ固有の決まり（全記事が対象）
+  check-articles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # 標準ライブラリだけのスクリプトなので、ランナーの python3 で動く
+      - name: Check articles
+        run: python3 tools/check_articles.py
+
+  # Markdown の書き方（PR で変更した記事だけが対象）
+  markdownlint:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+
+      # 依存パッケージのインストールスクリプトは実行しない
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Lint changed articles
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          mapfile -t files < <(git diff --name-only --diff-filter=ACMR "origin/${BASE_REF}...HEAD" -- 'public/*.md')
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "変更された記事はありません"
+            exit 0
+          fi
+          printf '検査する記事:\n'; printf '  %s\n' "${files[@]}"
+          npx --no-install markdownlint-cli2 "${files[@]}"
