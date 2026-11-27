@@ -4,13 +4,15 @@ tags:
   - Docker
   - ポートフォリオ
   - React
-  - GitHubPages
+  - Gh-pages
 private: false
-updated_at: '2025-06-19T21:20:42+09:00'
+updated_at: '2025-06-20T13:47:11+09:00'
 id: 5fc728012c753e7fe245
 organization_url_name: null
 slide: false
 ignorePublish: false
+posting_campaign_uuid: null
+agreed_posting_campaign_term: false
 ---
 
 ## 対象者
@@ -72,7 +74,7 @@ $ npx create-react-app my-resume cd my-resume # JavaScriptで構築
 $ npx create-react-app my-resume --template typescript # typescriptで構築
 ```
 
-- `my-resume-site`の中に以下のようなフィアルが作成されているか確認
+- `my-resume-site`の中に以下のようなファイルが作成されているか確認
 ```bash
 my-resume-site
 ├── build/

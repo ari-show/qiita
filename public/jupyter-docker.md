@@ -11,6 +11,8 @@ id: 43fecec65f17e3240324
 organization_url_name: null
 slide: false
 ignorePublish: false
+posting_campaign_uuid: null
+agreed_posting_campaign_term: false
 ---
 # 1. 概要
 このリポジトリは、DockerでJupyter Notebookを起動し、エディタをVScodeで使えるようにしたものです。

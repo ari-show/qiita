@@ -10,6 +10,8 @@ id: bff230414e361c69f555
 organization_url_name: null
 slide: false
 ignorePublish: false
+posting_campaign_uuid: null
+agreed_posting_campaign_term: false
 ---
 # 1. はじめに
 この記事では、ファイルの文字コードをshift-jisからUTF-8に変換するコードを紹介します。
