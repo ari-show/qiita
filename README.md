@@ -17,6 +17,7 @@ make new name=my-article   # 記事を作る（public/my-article.md）
 make preview               # ブラウザでプレビュー
 make pull                  # Qiita 側の記事を取り込む
 make check-names           # 記事のファイル名が規則どおりか調べる
+make lint                  # 記事を検査する（CI と同じ）
 ```
 
 記事のファイル名は英小文字・数字をハイフンでつなぐ（kebab-case。例: `uv-xdg-compliant.md`）。

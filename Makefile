@@ -6,7 +6,7 @@
 # 記事のファイル名の規則：英小文字・数字をハイフンでつなぐ（kebab-case）
 NAME_RE := ^[a-z0-9]+(-[a-z0-9]+)*$$
 
-.PHONY: help install new preview pull check-names icons diagram
+.PHONY: help install new preview pull check-names lint lint-fix icons diagram
 
 help: ## コマンドの一覧を表示する
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-12s %s\n", $$1, $$2}'
@@ -27,9 +27,19 @@ pull: ## Qiita 側の記事を手元に取り込む
 	npx qiita pull
 
 check-names: ## public/ の記事のファイル名が規則どおりか調べる
-	@bad=$$(ls public/*.md | xargs -n1 basename | sed 's/\.md$$//' | grep -Ev '$(NAME_RE)'); \
-	if [ -n "$$bad" ]; then echo "規則に合わないファイル名:"; echo "$$bad" | sed 's/^/  /'; exit 1; fi; \
+	@names=$$(ls public/*.md | xargs -n1 basename | sed 's/\.md$$//'); \
+	bad=$$(echo "$$names" | grep -Ev '$(NAME_RE)'; echo "$$names" | grep -E '^[0-9a-f]{20}$$'); \
+	if [ -n "$$bad" ]; then echo "規則に合わないファイル名（id のままの名前を含む）:"; echo "$$bad" | sed 's/^/  /'; exit 1; fi; \
 	echo "OK: すべて規則どおり"
+
+lint: ## 記事を検査する（CI と同じ。markdownlint は main から変えた記事だけ）
+	uv run tools/check_articles.py
+	@files=$$(git diff --name-only --diff-filter=ACMR origin/main -- 'public/*.md'; git ls-files --others --exclude-standard -- 'public/*.md'); \
+	if [ -z "$$files" ]; then echo "markdownlint: main から変えた記事はありません"; else npx --no-install markdownlint-cli2 $$files; fi
+
+lint-fix: ## 記事の空行などを自動で直す（例: make lint-fix f=public/my-article.md）
+	@test -n "$(f)" || { echo 'f を指定してください（例: make lint-fix f=public/my-article.md）'; exit 1; }
+	npx --no-install markdownlint-cli2 --fix "$(f)"
 
 icons: ## 図に使えるアイコンの一覧
 	uv run tools/drawio/drawio_kit.py icons
